@@ -2,9 +2,9 @@
 
 ### Environment & keys
 
-- Ask **Vlad** for the current `.env` values if you plan to reuse API keys.
+- Ask the developer for the current `.env` values if you plan to reuse API keys.
 - You may use your own keys instead. Copy `.env.sample` → `.env` and fill the values.
-- Langfuse is required (it stores system prompts and traces). Get the Langfuse keys and host from **Vlad**.
+- Langfuse is required (it stores system prompts and traces). Get the Langfuse keys and host from the developer.
 
 ### Prerequisites
 - Docker 24+

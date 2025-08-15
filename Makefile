@@ -18,7 +18,7 @@ down:
 	@docker rm -f $$(docker ps -aq --filter "name=$(IMAGE)_ctr") 2>/dev/null || true
 
 test:
-	@echo "Running tests..."
+	@echo "Running tests... Make sure you run `make build` before this step."
 	@docker run --rm --env-file $(ENV_FILE) -w /app $(IMAGE) uv run pytest
 
 logs:
