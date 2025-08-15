@@ -11,7 +11,7 @@ RUN uv sync --locked --no-dev
 COPY . /app/
 
 ENV PATH="/app/.venv/bin:$PATH"
-ENV PYTHONPATH="/app/src/not_only_poke_bot:$PYTHONPATH"
+ENV PYTHONPATH="/app/src/not_only_poke_bot"
 
 ENTRYPOINT []
 

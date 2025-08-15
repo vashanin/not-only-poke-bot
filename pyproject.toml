@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "black==25.1.0",
     "fastapi==0.115.14",
     "langchain==0.3.27",
     "langchain-community==0.3.27",
@@ -14,6 +15,7 @@ dependencies = [
     "langfuse==3.2.6",
     "langgraph==0.6.5",
     "langgraph-checkpoint-redis==0.1.0",
+    "pre-commit==4.3.0",
     "pydantic==2.11.7",
     "redis==6.4.0",
     "uvicorn==0.35.0",
