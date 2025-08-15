@@ -1,20 +1,17 @@
 .PHONY: build run up down test logs
 IMAGE    ?= not_only_poke_bot
-PORT     ?= 8000
+PORT     ?= 8080
 ENV_FILE ?= .env
 
 build:
 	@echo "Building Docker image $(IMAGE)..."
 	@docker build -t $(IMAGE) .
 
-up:
-	@echo "Starting Docker container $(IMAGE)_ctr..."
-	@docker build -t $(IMAGE) .
-	@docker run -d -p $(PORT):8000 --env-file $(ENV_FILE) --name $(IMAGE)_ctr $(IMAGE)
-
 run:
-	build
-	up
+	@echo "Running Docker container $(IMAGE)_ctr on port $(PORT)..."
+	@docker run -d -p $(PORT):8080 --env-file $(ENV_FILE) --name $(IMAGE)_ctr $(IMAGE)
+
+up: build run
 
 down:
 	@echo "Stopping and removing Docker container $(IMAGE)_ctr..."
@@ -26,4 +23,4 @@ test:
 
 logs:
 	@echo "Fetching logs from Docker container $(IMAGE)_ctr..."
-	@docker logs $(IMAGE)_ctr
+	@docker logs $(IMAGE)_ctr -f

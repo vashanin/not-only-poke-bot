@@ -2,9 +2,9 @@
 
 ### Environment & keys
 
-- Ask Vlad for the current .env values if you plan to reuse API keys.
-- You may use your own keys instead. Copy .env.sample → .env and fill the values.
-- Langfuse is required (it stores system prompts and traces). Get the Langfuse keys and host from Vlad.
+- Ask **Vlad** for the current `.env` values if you plan to reuse API keys.
+- You may use your own keys instead. Copy `.env.sample` → `.env` and fill the values.
+- Langfuse is required (it stores system prompts and traces). Get the Langfuse keys and host from **Vlad**.
 
 ### Prerequisites
 - Docker 24+
@@ -108,10 +108,11 @@ curl "http://localhost:8080/api/v1/battle?pokemon1=Pikachu&pokemon2=Bulbasaur"
 #### Chat (ask a question)
 - **POST** `/chat`
 - **Full path:** `/api/v1/chat`
-- **Body:** `{ "question": "Who counters Bulbasaur?" }`
+- **Body:** `{ "question": "Who would win in a battle, Pikachu or Bulbasaur?" }`
 - Response shape:
 ```json
 {
+  "reasoning": "...",
   "answer": "..."
 }
 ```
@@ -120,5 +121,5 @@ curl "http://localhost:8080/api/v1/battle?pokemon1=Pikachu&pokemon2=Bulbasaur"
 curl -X POST \
   http://localhost:8080/api/v1/chat \
   -H 'Content-Type: application/json' \
-  -d '{"question":"Who counters Bulbasaur?"}'
+  -d '{"question":"Who would win in a battle, Pikachu or Bulbasaur?"}'
 ```
