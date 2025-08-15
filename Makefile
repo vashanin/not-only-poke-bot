@@ -19,7 +19,7 @@ down:
 
 test:
 	@echo "Running tests..."
-	@docker run --rm -v $(CURDIR):/app --env-file $(ENV_FILE) -w /app $(IMAGE) pytest -q
+	@docker run --rm --env-file $(ENV_FILE) -w /app $(IMAGE) uv run pytest
 
 logs:
 	@echo "Fetching logs from Docker container $(IMAGE)_ctr..."
