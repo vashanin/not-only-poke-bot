@@ -1,4 +1,4 @@
-.PHONY: build pre-commit up run down test logs
+.PHONY: build run up down test logs
 IMAGE    ?= not_only_poke_bot
 PORT     ?= 8000
 ENV_FILE ?= .env
@@ -27,10 +27,3 @@ test:
 logs:
 	@echo "Fetching logs from Docker container $(IMAGE)_ctr..."
 	@docker logs $(IMAGE)_ctr
-
-pre-commit:
-	@echo "Running pre-commit hooks..."
-	@docker run --rm \
-		--env-file $(ENV_FILE) \
-		-v $(CURDIR):/app -w /app \
-		$(IMAGE) uv run pre-commit run --all-files
