@@ -1,4 +1,5 @@
-import requests
+import json
+import aiohttp
 from langchain_tavily import TavilySearch
 
 from langchain_core.tools import tool
@@ -11,7 +12,7 @@ tool_to_node_mapping = {
 
 
 @tool()
-def ask_researcher():
+async def ask_researcher():
     """
     The Researcher's goal is to retrieve information from external sources to help answer user queries.
     You must use it for sure when you need to get information about Pokémon stats and abilities, or when you need to answer questions about current events.
@@ -22,7 +23,7 @@ def ask_researcher():
 
 
 @tool()
-def ask_pokemon_expert():
+async def ask_pokemon_expert():
     """
     The Pokémon Expert's goal is to determine the probable winner in a Pokémon battle based on stats and type advantages.
     """
@@ -30,16 +31,31 @@ def ask_pokemon_expert():
 
 
 @tool()
-def get_pokemon_data(pokemon_name: str) -> dict:
+async def get_pokemon_data(pokemon_name: str) -> dict:
     """Use Poke API to get data about Pokémon abilities, stats and type advantages."""
+    url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}"
 
     try:
-        response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}").json()
-    except requests.JSONDecodeError:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=15) as resp:
+                if resp.status != 200:
+                    response = {
+                        "type": "error",
+                        "info": f"PokeAPI request failed with status {resp.status}. "
+                                "Check if the Pokémon name is valid and try again."
+                    }
+                else:
+                    response = await resp.json()
+
+    except aiohttp.ClientError as e:
         response = {
             "type": "error",
-            "info": "Failed to get Pokémon data from external sources. "
-                    "Check if the Pokémon name is valid and try again."
+            "info": f"HTTP error from PokeAPI: {e}. Check if the Pokémon name is valid and try again."
+        }
+    except json.JSONDecodeError:
+        response = {
+            "type": "error",
+            "info": "Failed to parse PokeAPI response. Please try again."
         }
 
     return response

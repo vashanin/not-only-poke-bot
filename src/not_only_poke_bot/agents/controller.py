@@ -10,8 +10,8 @@ class Controller:
         self.graph = Graph(answer_key=answer_key, answer_example=answer_example).compile()
         self.langfuse_handler = CallbackHandler()
 
-    def chat(self, human_message: str) -> dict:
-        result = self.graph.invoke(
+    async def chat(self, human_message: str) -> dict:
+        result = await self.graph.ainvoke(
             {
                 "messages": [("user", human_message)],
             },
@@ -23,5 +23,5 @@ class Controller:
 
         return response
 
-    def battle(self, pokemon1: str, pokemon2: str):
-        return self.chat(f"Who would win in a battle between {pokemon1} and {pokemon2}?")
+    async def battle(self, pokemon1: str, pokemon2: str):
+        return await self.chat(f"Who would win in a battle between {pokemon1} and {pokemon2}?")

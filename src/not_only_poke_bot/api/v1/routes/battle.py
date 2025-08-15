@@ -12,4 +12,4 @@ router = APIRouter(prefix="/battle", tags=["battle"])
 async def battle(pokemon1: str = Query(...), pokemon2: str = Query(...)):
     controller = Controller(answer_key="winner", answer_example="Pikachu")
 
-    return controller.battle(pokemon1, pokemon2)
+    return await controller.battle(pokemon1, pokemon2)

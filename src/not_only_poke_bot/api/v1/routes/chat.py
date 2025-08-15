@@ -15,4 +15,4 @@ async def chat(payload: ChatRequest):
         answer_example="Pikachu has an electric-type advantage over Bulbasaur, so it would likely win."
     )
 
-    return controller.chat(payload.question)
+    return await controller.chat(payload.question)
