@@ -1,9 +1,8 @@
 import json
+
 import aiohttp
-from langchain_tavily import TavilySearch
-
 from langchain_core.tools import tool
-
+from langchain_tavily import TavilySearch
 
 tool_to_node_mapping = {
     "ask_researcher": "researcher",
@@ -42,7 +41,7 @@ async def get_pokemon_data(pokemon_name: str) -> dict:
                     response = {
                         "type": "error",
                         "info": f"PokeAPI request failed with status {resp.status}. "
-                                "Check if the Pokémon name is valid and try again."
+                        "Check if the Pokémon name is valid and try again.",
                     }
                 else:
                     response = await resp.json()
@@ -50,13 +49,10 @@ async def get_pokemon_data(pokemon_name: str) -> dict:
     except aiohttp.ClientError as e:
         response = {
             "type": "error",
-            "info": f"HTTP error from PokeAPI: {e}. Check if the Pokémon name is valid and try again."
+            "info": f"HTTP error from PokeAPI: {e}. Check if the Pokémon name is valid and try again.",
         }
     except json.JSONDecodeError:
-        response = {
-            "type": "error",
-            "info": "Failed to parse PokeAPI response. Please try again."
-        }
+        response = {"type": "error", "info": "Failed to parse PokeAPI response. Please try again."}
 
     return response
 

@@ -19,7 +19,7 @@ class Controller:
             config={"callbacks": [self.langfuse_handler]},
         )
 
-        response = json.loads(result['messages'][-1].content)
+        response = json.loads(result["messages"][-1].content)
 
         return response
 

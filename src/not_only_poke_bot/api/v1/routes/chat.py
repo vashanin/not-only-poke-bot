@@ -4,7 +4,6 @@ from agents.controller import Controller
 
 from ..schemas.chat import ChatRequest
 
-
 router = APIRouter(prefix="/chat", tags=["chat"])
 
 
@@ -12,7 +11,7 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 async def chat(payload: ChatRequest):
     controller = Controller(
         answer_key="answer",
-        answer_example="Pikachu has an electric-type advantage over Bulbasaur, so it would likely win."
+        answer_example="Pikachu has an electric-type advantage over Bulbasaur, so it would likely win.",
     )
 
     return await controller.chat(payload.question)

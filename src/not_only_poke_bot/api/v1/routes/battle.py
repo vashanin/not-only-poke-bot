@@ -4,7 +4,6 @@ from agents.controller import Controller
 
 from ..schemas.battle import BattleResponse
 
-
 router = APIRouter(prefix="/battle", tags=["battle"])
 
 

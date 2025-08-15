@@ -1,24 +1,15 @@
 from typing import Literal
 
-from langfuse import get_client
-
 from langchain_openai import ChatOpenAI
-from langgraph.prebuilt import create_react_agent
-from langgraph.graph import MessagesState, END
-from langgraph.types import Command, Checkpointer
-from langgraph.checkpoint.redis import RedisSaver
-
-from langgraph.graph import StateGraph, START
+from langfuse import get_client
+from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.graph.state import CompiledStateGraph
-
-from .tools import (
-    ask_researcher,
-    ask_pokemon_expert,
-    get_pokemon_data,
-    tavily_tool,
-)
+from langgraph.prebuilt import create_react_agent
+from langgraph.types import Command
 
 from core.settings import settings
+
+from .tools import ask_pokemon_expert, ask_researcher, get_pokemon_data, tavily_tool
 from .utils import get_next_node
 
 
@@ -67,10 +58,6 @@ class Graph:
         result = await self.pokemon_expert_agent.ainvoke(state)
 
         return Command(update={"messages": result["messages"]})
-
-    @classmethod
-    def get_checkpointer(cls) -> Checkpointer:
-        return RedisSaver.from_conn_string(settings.redis.url)
 
     def compile(self) -> CompiledStateGraph:
         workflow = StateGraph(MessagesState)
